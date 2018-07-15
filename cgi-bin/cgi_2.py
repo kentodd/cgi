@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 import cgi
 import cgitb
-cgitb.enable()
 import os
 import datetime
-
+cgitb.enable()
 
 default = "No Value Present"
-
+mydate = datetime.datetime.now()
 
 print("Content-Type: text/html")
 print("")
@@ -23,10 +22,11 @@ body = """<html>
 </body>
 </html>""".format(
     software=os.environ.get('SERVER_SOFTWARE', default),
-    script='aaaa',
-    month='bbbb',
-    date='cccc',
-    year='dddd',
-    client_ip='eeee'
+    script=os.environ.get('SCRIPT_NAME', default),
+    month=mydate.strftime('%B'),
+    date=mydate.day,
+    year=mydate.year,
+    client_ip=os.environ.get('REMOTE_ADDR', default),
+
 )
 print(body)
